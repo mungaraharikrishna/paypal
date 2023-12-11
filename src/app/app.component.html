@@ -1,6 +1,17 @@
 
-<button type="button" (click)="pay()">Pay</button><br>
-<button type="button" (click)="update('CAD')">Update CAD</button>
-<button type="button" (click)="update('USD')">Update USD</button>
-<app-paypal [currency]="currencyCode" [amount]="amount" *ngIf="show"></app-paypal>
+<div class="container p-5">
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="USD" (change)="update('USD')" checked>
+    <label class="form-check-label" for="inlineRadio2">Update USD</label>
+  </div>
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="CAD" (change)="update('CAD')">
+    <label class="form-check-label" for="inlineRadio1">Update CAD</label>
+  </div>
+  <!-- <button type="button" class="btn btn-primary" (click)="update('CAD')">Update CAD</button>
+  <button type="button" class="btn btn-outline-primary mx-2" (click)="update('USD')">Update USD</button> -->
+  <button type="button" class="btn btn-secondary" (click)="pay()">Pay Now</button>
+  <br><br>
+  <app-paypal [currency]="currencyCode" [amount]="amount" *ngIf="show"></app-paypal>
+</div>
 <!-- <ngx-paypal *ngIf="show" [config]="payPalConfig"></ngx-paypal> -->
