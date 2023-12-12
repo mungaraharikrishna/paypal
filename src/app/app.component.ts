@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, NgZone, Renderer2 } from '@angular/core';
 import { IPayPalConfig, ICreateOrderRequest, PayPalScriptService } from 'ngx-paypal';
 
 @Component({
@@ -14,12 +14,17 @@ export class AppComponent {
   currencyCode = 'USD';
   amount = '99.99';
   show = false
-  constructor(private zone: NgZone, private paypalScriptService: PayPalScriptService) { }
+  constructor(private zone: NgZone, private paypalScriptService: PayPalScriptService, private renderer: Renderer2) { }
   ngOnInit(): void {
-    this.updateScriptTagParams('myScript', this.currencyCode)
+    // this.updateScriptTagParams('myScript', this.currencyCode)
   }
 
   updateScriptTagParams(scriptId: any, currency_code: any) {
+    const script = this.renderer.createElement('script');
+    script.type = 'text/javascript';
+    script.id = 'myScript';
+    script.src = 'https://www.paypal.com/sdk/js?client-id=AbLhGGOMRDQpgRVSaYa_6CkQFSrjzM3bOaOWG6TM72FCpNQhTHq_E3SZJIr7_4RJj3eErD6oSLfRzD7X&currency=USD';
+    this.renderer.appendChild(document.body, script);
     var scriptTag = document.getElementById(scriptId) as HTMLScriptElement;
     // Get the current script source URL
     var currentSrc = scriptTag.src;
