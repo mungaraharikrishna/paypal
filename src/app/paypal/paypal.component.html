@@ -1,1 +1,1 @@
-<ngx-paypal *ngIf="payPalConfig" [config]="payPalConfig"></ngx-paypal>
+<ngx-paypal [hidden]="!payPalConfig" [config]="payPalConfig" #paypalButton></ngx-paypal>

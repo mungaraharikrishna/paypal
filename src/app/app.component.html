@@ -10,6 +10,6 @@
   </div>
   <button type="button" class="btn btn-secondary" (click)="pay()">Pay Now</button>
   <br><br>
-  <app-paypal [currency]="currencyCode" [amount]="amount" *ngIf="show"></app-paypal>
+  <app-paypal [currency]="currencyCode" [amount]="amount" *ngIf="show" (onClose)="eventObj($event)"></app-paypal>
 </div>
 <!-- <ngx-paypal *ngIf="show" [config]="payPalConfig"></ngx-paypal> -->

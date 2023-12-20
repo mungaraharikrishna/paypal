@@ -41,6 +41,9 @@ export class AppComponent {
 
 
   update(currency_code: any) {
+    if(document.getElementById('myScript')) {
+      this.renderer.removeChild(document.body, document.getElementById('myScript'))
+    }
     this.zone.run(() => {
       this.show = false;
       this.currencyCode = currency_code;
@@ -51,6 +54,12 @@ export class AppComponent {
   pay() {
     this.zone.run(() => {
       this.show = true;
+    })
+  }
+
+  eventObj(event: any) {
+    this.zone.run(() => {
+      this.show = false;
     })
   }
 

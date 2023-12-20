@@ -1,5 +1,5 @@
-import { Component, Input, NgZone } from '@angular/core';
-import { ICreateOrderRequest, IPayPalConfig, PayPalScriptService } from 'ngx-paypal';
+import { Component, ElementRef, EventEmitter, Input, NgZone, Output, ViewChild } from '@angular/core';
+import { ICreateOrderRequest, IPayPalConfig, NgxPaypalComponent, PayPalScriptService } from 'ngx-paypal';
 
 @Component({
   selector: 'app-paypal',
@@ -7,6 +7,8 @@ import { ICreateOrderRequest, IPayPalConfig, PayPalScriptService } from 'ngx-pay
   styleUrls: ['./paypal.component.scss']
 })
 export class PaypalComponent {
+  @ViewChild('paypalButton', { static: true }) paypalButton!: NgxPaypalComponent;
+  @Output() onClose = new EventEmitter();
   @Input() currency!: string
   @Input() amount!: string
   public payPalConfig?: any;
@@ -18,7 +20,6 @@ export class PaypalComponent {
   ngOnInit(): void {
     this.initConfig();
     console.log(this.payPalConfig)
-    this.payPalConfig.createOrderOnClient('');
     console.log(this.payPalConfig.createOrderOnClient(''))
   }
 
@@ -75,21 +76,34 @@ export class PaypalComponent {
           console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
           this.showSuccess = true;
         },
-        onCancel: (data: any, actions: any) => {
-          console.log('OnCancel', data, actions);
-          this.showCancel = true;
-          this.paypalScriptService.destroyPayPalScript()
-        },
+        onCancel: (data: any, actions: any) => this.closePayPalPopup(),
         onError: (err: any) => {
           console.log('OnError', err);
           this.showError = true;
         },
-        onClick: (data: any, actions: any) => {
-          console.log('onClick', data, actions);
-        }
+        onClick: (data: any, actions: any) => this.onButtonClick()
       };
 
     })
+  }
+
+  onButtonClick() {
+    console.log('clicked')
+    setTimeout(() => {
+      this.closePayPalPopup()
+    }, 5000)
+  }
+
+  closePayPalPopup() {
+    console.log(this.paypalScriptService)
+    console.log('closed')
+    console.log(this.paypalButton)
+    this.payPalConfig = undefined;
+    this.paypalButton.reinitialize(this.payPalConfig);
+    this.onClose.emit('close');
+    setTimeout(() => {
+    }, 100);
+    // window.location.href = '/'
   }
 
 }
