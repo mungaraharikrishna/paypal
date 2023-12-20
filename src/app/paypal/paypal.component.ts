@@ -76,7 +76,11 @@ export class PaypalComponent {
           console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
           this.showSuccess = true;
         },
-        onCancel: (data: any, actions: any) => this.closePayPalPopup(),
+        onCancel: (data: any, actions: any) => {
+          console.log('OnCancel', data, actions);
+          this.showCancel = true;
+          this.paypalScriptService.destroyPayPalScript()
+        },
         onError: (err: any) => {
           console.log('OnError', err);
           this.showError = true;
@@ -100,6 +104,7 @@ export class PaypalComponent {
     console.log(this.paypalButton)
     this.payPalConfig = undefined;
     this.paypalButton.reinitialize(this.payPalConfig);
+    this.paypalScriptService.destroyPayPalScript()
     this.onClose.emit('close');
   }
 

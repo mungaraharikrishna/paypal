@@ -41,9 +41,9 @@ export class AppComponent {
 
 
   update(currency_code: any) {
-    if(document.getElementById('myScript')) {
-      this.renderer.removeChild(document.body, document.getElementById('myScript'))
-    }
+    // if(document.getElementById('myScript')) {
+    //   this.renderer.removeChild(document.body, document.getElementById('myScript'))
+    // }
     this.zone.run(() => {
       this.show = false;
       this.currencyCode = currency_code;
