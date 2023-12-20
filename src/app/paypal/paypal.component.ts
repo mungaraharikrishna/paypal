@@ -101,9 +101,6 @@ export class PaypalComponent {
     this.payPalConfig = undefined;
     this.paypalButton.reinitialize(this.payPalConfig);
     this.onClose.emit('close');
-    setTimeout(() => {
-    }, 100);
-    // window.location.href = '/'
   }
 
 }
